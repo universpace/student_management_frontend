@@ -40,6 +40,21 @@
         text-decoration: none;
         /*font-size: 1.5rem;*/
         /*font-weight: bold;*/
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+    h3 {
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        cursor:pointer;
     }
 
     a:hover {
