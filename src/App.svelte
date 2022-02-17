@@ -1,7 +1,10 @@
 <script>
     import Sidebar from "./component/Sidebar.svelte";
-    import StudentManagement from "./page/Student_management.svelte";
-    import RecordManagement from "./page/Record_management.svelte";
+    import StudentList from "./page/StudentList.svelte";
+    import StudentReg from './page/StudentReg.svelte'
+    import RecordList from './page/RecordList.svelte';
+    import RecordReg from './page/RecordReg.svelte';
+    import MainPage from "./page/MainPage.svelte";
     import Router, {location, link} from 'svelte-spa-router';
 </script>
 <style>
@@ -23,6 +26,14 @@
         width:100%;
         display: flex;
     }
+    :global(.page){
+        height: 100%;
+        padding: 0;
+        margin: 0;
+        width: 100%;
+        background-color:rgba(162, 232, 255, 0.548);
+        display: flex;
+    }
 </style>
 <main class="main_container">
     <div style="width:17%;max-width:230px">
@@ -30,8 +41,11 @@
     </div>
     <div style="width:100%">
         <Router routes={{
-            '/':StudentManagement,
-            '/record':RecordManagement
+            '/':MainPage,
+            '/student/list':StudentList,
+            '/student/reg':StudentReg,
+            '/record/list':RecordList,
+            '/record/reg':RecordReg
             }
         }/>
     </div>

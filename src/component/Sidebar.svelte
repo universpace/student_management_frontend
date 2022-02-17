@@ -16,25 +16,25 @@
     }
     let student = [
         {
-            menuName: '학생목록',
-            url: '/#',
+            menuName: '학생 목록',
+            url: '/#/student/list',
             iconName:'person-lines-fill'
         },
         {
-            menuName: '학생등록',
-            url: '/#',
+            menuName: '학생 등록',
+            url: '/#/student/reg',
             iconName:'person-plus-fill'
         }
     ]
     let record = [
         {
             menuName: '기록 목록',
-            url: '/#/record',
+            url: '/#/record/list',
             iconName:'person-lines-fill'
         },
         {
             menuName: '기록 등록',
-            url: '/#/record',
+            url: '/#/record/reg',
             iconName:'person-plus-fill'
         }
     ]
@@ -85,11 +85,15 @@
     .student-menu, .record-menu {
         margin-left: 22%;
     }
+    h1 {
+        margin-top: -30%;
+        margin-bottom: 30%;
+    }
 </style>
 <aside class="sidebar">
     <menu>
+        <h1><a href="#"><Icon name="house-fill"/></a></h1>
         <li>
-
             <h3 class="student" on:click="{handleOnClick}">
                 <Icon name="person-square"/>
                 학생 관리
