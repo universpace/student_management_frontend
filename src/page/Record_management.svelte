@@ -4,14 +4,14 @@
 </script>
 <Styles/>
 <style>
-    .studentmain{
+    .recordmain{
         height: 100%;
         padding: 0;
         margin: 0;
         width: 100%;
-        background-color:black;
+        background-color:red;
     }
 </style>
-<main class="studentmain">
+<main class="recordmain">
     <p>{$location}</p>
 </main>

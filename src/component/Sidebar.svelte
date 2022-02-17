@@ -1,6 +1,6 @@
 <script>
     import {Styles, Icon} from "sveltestrap";
-
+    import {push} from 'svelte-spa-router'
     let visibleStudent = false;
     let visibleRecord = false;
 
@@ -14,6 +14,31 @@
             visibleRecord = !visibleRecord;
         }
     }
+    let student = [
+        {
+            menuName: '학생목록',
+            url: '/#',
+            iconName:'person-lines-fill'
+        },
+        {
+            menuName: '학생등록',
+            url: '/#',
+            iconName:'person-plus-fill'
+        }
+    ]
+    let record = [
+        {
+            menuName: '기록 목록',
+            url: '/#/record',
+            iconName:'person-lines-fill'
+        },
+        {
+            menuName: '기록 등록',
+            url: '/#/record',
+            iconName:'person-plus-fill'
+        }
+    ]
+
 </script>
 <Styles/>
 <style>
@@ -41,7 +66,10 @@
         /*font-size: 1.5rem;*/
         /*font-weight: bold;*/
     }
-
+    h3 {
+        font-size: 1.5rem;
+        /* margin-left:5% */
+    }
     a:hover {
         color: white;
     }
@@ -57,9 +85,6 @@
     .student-menu, .record-menu {
         margin-left: 22%;
     }
-    .activatemenu{
-        color:white;
-    }
 </style>
 <aside class="sidebar">
     <menu>
@@ -70,8 +95,9 @@
                 학생 관리
             </h3>
             {#if visibleStudent}
-                <p class="student-menu"><a href="#"><Icon name="person-lines-fill"/> 학생 목록</a></p>
-                <p class="student-menu"><a href="#"><Icon name="person-plus-fill"/> 학생 등록</a></p>
+                {#each student as row}
+                    <p class="student-menu"><a href="{row.url}" ><Icon name="{row.iconName}"/> {row.menuName}</a></p> 
+                {/each}
             {/if}
         </li>
         <li>
@@ -80,8 +106,9 @@
                 기록 관리
             </h3>
             {#if visibleRecord}
-                <p class="record-menu"><a href="#"><Icon name="list-ul"/> 기록 목록</a></p>
-                <p class="record-menu"><a href="#"><Icon name="file-plus"/> 기록 등록</a></p>
+                {#each record as row}
+                    <p class="record-menu"><a href="{row.url}"><Icon name="{row.iconName}"/> {row.menuName}</a></p> 
+                {/each}
             {/if}
         </li>
     </menu>

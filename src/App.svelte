@@ -1,6 +1,8 @@
 <script>
     import Sidebar from "./component/Sidebar.svelte";
-    import {Col, Container, Row} from "sveltestrap";
+    import StudentManagement from "./page/Student_management.svelte";
+    import RecordManagement from "./page/Record_management.svelte";
+    import Router, {location, link} from 'svelte-spa-router';
 </script>
 <style>
     :global(body){
@@ -15,23 +17,23 @@
         padding: 0;
         height: 100%;
     }
-    :global(#main){
-        padding: 0;
-        margin: 0;
+
+    .main_container{
         height: 100%;
-    }
-    :global(#column){
-        padding: 0;
-        height: 100%;
+        width:100%;
+        display: flex;
     }
 </style>
-<Container xxl id="main">
-    <Row id="main">
-        <Col sm="2" id="column">
-            <Sidebar/>
-        </Col>
-        <Col id="column">
+<main class="main_container">
+    <div style="width:17%;max-width:230px">
+        <Sidebar/>
+    </div>
+    <div style="width:100%">
+        <Router routes={{
+            '/':StudentManagement,
+            '/record':RecordManagement
+            }
+        }/>
+    </div>
+</main>
 
-        </Col>
-    </Row>
-</Container>
