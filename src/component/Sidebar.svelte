@@ -1,5 +1,6 @@
 <script>
     import {Styles, Icon} from "sveltestrap";
+    import {slide} from 'svelte/transition'
     import {push} from 'svelte-spa-router'
     let visibleStudent = false;
     let visibleRecord = false;
@@ -76,6 +77,7 @@
 
     .student, .record {
         font-weight: bold;
+        cursor:pointer;
     }
 
     .student:hover, .record:hover {
@@ -100,7 +102,7 @@
             </h3>
             {#if visibleStudent}
                 {#each student as row}
-                    <p class="student-menu"><a href="{row.url}" ><Icon name="{row.iconName}"/> {row.menuName}</a></p> 
+                    <p class="student-menu" in:slide={{duration:1000}} out:slide={{duration:500}}><a href="{row.url}" ><Icon name="{row.iconName}"/> {row.menuName}</a></p>
                 {/each}
             {/if}
         </li>
@@ -111,7 +113,7 @@
             </h3>
             {#if visibleRecord}
                 {#each record as row}
-                    <p class="record-menu"><a href="{row.url}"><Icon name="{row.iconName}"/> {row.menuName}</a></p> 
+                    <p class="record-menu" in:slide={{duration:1000}} out:slide={{duration:500}}><a href="{row.url}"><Icon name="{row.iconName}"/> {row.menuName}</a></p>
                 {/each}
             {/if}
         </li>

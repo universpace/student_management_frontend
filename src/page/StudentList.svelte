@@ -1,5 +1,5 @@
 <script>
-    import {Column, FormGroup, Input, Label, Styles, Table} from "sveltestrap";
+    import {Button, Column, FormGroup, Input, Label, Styles, Table} from "sveltestrap";
     let studentList = [
       {
       "pk": 1,
@@ -153,13 +153,7 @@
       "addressDetail": "9 Independence Lane"
     }
   ]
-    let select = {
-        pk:null,
-        name:null,
-        phoneNumber:null,
-        address:null,
-        addressDetail:null
-    }
+    let picked = null
 </script>
 <Styles/>
 <style>
@@ -195,6 +189,10 @@
     :global(#studentList){
         font-size:2em;
     }
+    :global(#studentButton){
+        margin-top: 5em;
+        margin-right: 2em;
+    }
 </style>
 <main class="page">
     <div class="tableContainer">
@@ -212,13 +210,13 @@
         <div class="tablebodyContainer">
             <Table id="studentTable" hover bordered>
                 <tbody>
-                    {#each studentList as student}
+                    {#each studentList as {pk, name, phoneNumber, address, addressDetail},i}
                     <tr>
-                        <td><Input id="{"student" + student.pk}" type="radio" bind:value={student}/></td>
-                        <th scope="row">{student.pk}</th>
-                        <td>{student.name}</td>
-                        <td>{student.phoneNumber}</td>
-                        <td>{student.address + ' ' + student.addressDetail}</td>
+                        <td style="width:6.1%;"><Input id="{'student' +  pk}" bind:value={pk} type="radio" name="student" bind:group="{picked}"/></td>
+                        <th style="width:5.75%;" scope="row">{pk}</th>
+                        <td style="width:26.6%;">{name}</td>
+                        <td style="width:16%;">{phoneNumber}</td>
+                        <td>{address + ' ' + addressDetail}</td>
                     </tr>
                     {/each}
                 </tbody>
@@ -226,6 +224,18 @@
         </div>
     </div>
     <div style="margin-left:5%; margin-top:20%;">
-        <p>학생이름 : </p>
+        {#if picked !== null}
+            <p>학생이름 : {studentList[picked].name}</p>
+            <p>전화번호 : {studentList[picked].phoneNumber}</p>
+            <p>주　　소 : {studentList[picked].address + ' ' + studentList[picked].addressDetail}</p>
+        {:else}
+            <p style="visibility: hidden">text</p>
+            <p style="visibility: hidden">text</p>
+            <p style="visibility: hidden">text</p>
+        {/if}
+        <Button id="studentButton" color="primary" outline>수정하기</Button>
+        <Button id="studentButton" color="danger">삭제하기</Button>
     </div>
+
+
 </main>
