@@ -1,5 +1,6 @@
 <script>
     import {
+        Alert,
         Button,
         Form,
         FormGroup,
@@ -11,9 +12,10 @@
         TabContent, Table,
         TabPane
     } from "sveltestrap";
-    import { beforeUpdate, afterUpdate} from 'svelte'
+    import { beforeUpdate, afterUpdate, tick} from 'svelte'
     let open = false;
     const toggle = () => {open = !open}
+    let duplicate = false;
     let studentName = null
     let studentList = [
         {
@@ -89,6 +91,10 @@
             foundStudentList = studentList.filter(findStudent)
             selectedRecord = []
         }
+        if(e.type==='click'){
+            foundStudentList = studentList.filter(findStudent)
+            selectedRecord = []
+        }
     }
     function getStudentName(studentId){
         function findThisStudent(e){
@@ -112,15 +118,21 @@
         }
     }
     function createCategory(){
-        if (newCategory !== null ){
-            console.log(newCategory)
-            categoryList.push({id:categoryList.length,name:newCategory})
-            open = !open
-            return
+        if (newCategory !== null){
+            let exlistCategory = categoryList.find(e=>e.name===newCategory)
+            if(!exlistCategory){
+                const category = {
+                    id:categoryList.length,
+                    name:newCategory
+                }
+                categoryList = [...categoryList, category]
+            }
+            else{
+                duplicate = !duplicate
+            }
         }
         open = !open
     }
-
 </script>
 <Styles/>
 <style>
@@ -134,13 +146,18 @@
         display: flex;
         flex-direction: column;
     }
+    :global(#duplicate-alert){
+        position:absolute;
+        margin-left: 28%;
+        z-index: 100;
+    }
 </style>
 <main class="page">
     <div id="record-student-input">
-        <Form>
+        <Form on:submit={(e)=>e.preventDefault()}>
             <InputGroup>
-                <Input placeholder="학생명" bsSize="bg" bind:value={studentName} on:keyup="{handleSearch}"/>
-                <InputGroupText><Button color="link"><Icon name="search"/></Button></InputGroupText>
+                <Input placeholder="학생명" bsSize="bg" bind:value={studentName} on:keydown={handleSearch}/>
+                <InputGroupText><Button color="link" on:click={handleSearch}><Icon name="search"/></Button></InputGroupText>
             </InputGroup>
         </Form>
         <Table hover>
@@ -155,7 +172,7 @@
     </div>
     <TabContent id="recordtab" on:tab={addCategory}>
         {#each categoryList as category, idx}
-            <TabPane tabId={category.id} tab={category.name} active={idx===0}>
+            <TabPane tabId="{'tab'+category.id}" tab={category.name} active={idx===0}>
                 {#each selectedRecord as record}
                     {#if record.category===category.name}
                         <p>학생명 : {getStudentName(record.student)}</p>
@@ -166,18 +183,6 @@
         {/each}
         <TabPane tabId="addCategory" tab="+">
         </TabPane>
-<!--        <TabPane tabId="learning" tab="학습" active>-->
-<!--            학습-->
-<!--        </TabPane>-->
-<!--        <TabPane tabId="life" tab="생활">-->
-<!--            생활-->
-<!--        </TabPane>-->
-<!--        <TabPane tabId="tenacity" tab="인성">-->
-<!--            인성-->
-<!--        </TabPane>-->
-<!--        <TabPane tabId="remark" tab="특이사항">-->
-<!--            특이사항-->
-<!--        </TabPane>-->
     </TabContent>
     <Modal isOpen={open} {toggle}>
         <ModalHeader {toggle}>새로운 카테고리 입력</ModalHeader>
@@ -190,4 +195,7 @@
             <Button color="secondary" on:click={toggle}>닫기</Button>
         </ModalFooter>
     </Modal>
+    <Alert color="primary" isOpen={duplicate} toggle={()=>duplicate = false} id="duplicate-alert" dismissible>
+        카테고리는 중복으로 등록할 수 없습니다.
+    </Alert>
 </main>
