@@ -26,6 +26,14 @@
         }
     ]
     let foundStudentList = []
+    let isClicked = false;
+    let selectedStudent = null
+    let categoryList = [
+        {id:0,name:'학습'},
+        {id:1,name:'생활'},
+        {id:2,name:'인성'},
+        {id:3,name:'특이사항'},
+    ]
     function findStudent(element){
         return element.name === studentName;
     }
@@ -38,13 +46,10 @@
         }
     }
     function handleClick(e){
+        isClicked = false
         let selectIndex = parseInt(e.target.parentElement.innerText[0])
-        let selectedStudent = foundStudentList[selectIndex]
-        function findRecord(e){
-            return e.student===selectedStudent.id
-        }
-        // selectedRecord = recordList.filter(findRecord)
-        // console.log(selectedRecord)
+        selectedStudent = foundStudentList[selectIndex]
+        isClicked = true
     }
 </script>
 <Styles/>
@@ -74,4 +79,16 @@
             {/each}
         </Table>
     </div>
+    {#if isClicked && selectedStudent!==null}
+    <Form on:submit={(e)=>e.preventDefault()}>
+        <InputGroup>
+            <Input type="select" name="selectCategory" id="selectCategory">
+                <option disabled selected value> -- 선택해주세요 -- </option>
+                {#each categoryList as ct}
+                    <option value={ct}>{ct.name}<option>
+                {/each}
+            </Input>
+        </InputGroup>
+    </Form>
+    {/if}
 </main>
